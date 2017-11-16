@@ -1,0 +1,26 @@
+{
+  "name": "dvd-player",
+  "version": "1.0.0",
+  "description": "Play DVD on your mobile.",
+  "dependencies": {
+    "bootstrap": "4.0.0-beta",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.17"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom"
+  },
+  "keywords": [
+    "DVD",
+    "HTML5"
+  ],
+  "author": "Guillaume C. Marty <edo999@gmail.com>",
+  "main": "src/index.js",
+  "repository": "https://github.com/gmarty/dvd-player",
+  "license": "GPL-3.0+",
+  "private": false
+}

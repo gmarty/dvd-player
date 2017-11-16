@@ -1,0 +1,27 @@
+.ChapterList {
+  overflow-y: scroll;
+}
+
+.ChapterList h2 {
+  margin: 0.5em 0;
+}
+
+.ChapterList ul {
+  list-style: none;
+  padding: 0;
+}
+
+.ChapterList ul li {
+  margin: 0.1em 0;
+}
+
+.ChapterList ul li .duration {
+  color: lightgrey;
+  font-size: .8em;
+}
+
+@media (orientation: landscape) {
+  .ChapterList {
+    display: none;
+  }
+}

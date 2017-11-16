@@ -1,0 +1,222 @@
+.Video {
+  object-fit: contain;
+  position: relative;
+  display: block;
+  min-width: 100vmin;
+  min-height: calc(100vmin / 4 * 3);
+  margin: auto;
+}
+
+/* 16:9 aspect ratio. */
+.Video.ratio16_9 {
+  min-height: calc(100vmin / 16 * 9);
+}
+
+.Video .videos {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.Video .videos video {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.media-controls-enclosure {
+  z-index: 999;
+  width: 100%;
+  height: 32px;
+  bottom: 0;
+  text-indent: 0;
+  left: 0;
+  padding: 0;
+  position: absolute;
+}
+
+.media-controls-panel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  user-select: none;
+  position: relative;
+  width: 100%;
+  z-index: 0;
+  text-align: right;
+  bottom: 0;
+  height: 32px;
+  min-width: 48px;
+  line-height: 32px;
+  background-color: rgba(250, 250, 250, 0.8);
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  overflow: hidden;
+  transition: opacity, background-color 0.3s;
+}
+
+.media-controls-panel:hover {
+  background-color: rgb(250, 250, 250);
+}
+
+.media-controls-play-button,
+.media-controls-rewind-button,
+.media-controls-forward-button,
+.media-controls-mute-button,
+.media-controls-menu-button,
+.media-controls-toggle-closed-captions-button,
+.media-controls-fullscreen-button {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  padding: 0;
+  border-width: 0;
+  background-size: 24px;
+  background-color: initial;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.media-controls-play-button {
+  background-image: url('./icons/play.svg');
+}
+
+.media-controls-play-button.paused {
+  background-image: url('./icons/pause.svg');
+}
+
+.media-controls-rewind-button {
+  background-image: url('./icons/rewind.svg');
+}
+
+.media-controls-forward-button {
+  background-image: url('./icons/forward.svg');
+}
+
+.media-controls-current-time-display,
+.media-controls-time-remaining-display {
+  user-select: none;
+  display: flex;
+  cursor: default;
+  height: 32px;
+  color: #555;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0;
+  text-shadow: none;
+  text-decoration: none;
+  flex: 0 0 auto;
+  border: none;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.media-controls-time-remaining-display {
+  padding: 0 4px;
+}
+
+.media-controls-timeline,
+.media-controls-volume-slider {
+  display: flex;
+  height: 2px;
+  background-color: transparent;
+  min-width: 25px;
+  color: inherit;
+  flex: 1 1 auto;
+  padding: 0;
+  margin: 0 6px;
+  border: initial;
+}
+
+.media-controls-mute-button {
+  background-image: url('./icons/audio.svg');
+}
+
+.media-controls-mute-button.muted {
+  background-image: url('./icons/mute.svg');
+}
+
+.media-controls-volume-slider {
+  flex: 1 1.9 auto;
+}
+
+.media-controls-menu-button {
+  background-image: url('./icons/menu.svg');
+}
+
+.media-controls-toggle-closed-captions-button {
+  background-image: url('./icons/closed-captions.svg');
+}
+
+.media-controls-fullscreen-button {
+  background-image: url('./icons/fullscreen.svg');
+}
+
+input[type='range'] {
+  -webkit-appearance: none;
+  background: rgba(107, 107, 107, 0.8);
+}
+
+input[type='range']::-moz-range-track {
+  border: none;
+  background: transparent;
+  height: 6px;
+}
+
+input[type='range']::-moz-range-progress {
+  border: none;
+  background: rgba(235, 235, 235, 0.5);
+  height: 6px;
+}
+
+input[type='range']::-moz-range-thumb {
+  border: none;
+  background: #555;
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  overflow: hidden;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: dodgerblue;
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  position: relative;
+}
+
+input[type='range']::-webkit-slider-thumb:after {
+  background: rgba(235, 235, 235, 0.5);
+  width: 800px;
+  height: 7px;
+  top: 6px;
+  right: 12px;
+  position: absolute;
+  z-index: 1;
+  content: "";
+}
+
+@media (orientation: landscape) {
+  .Video {
+    min-width: calc(100vmin / 3 * 4);
+    min-height: 100vmin;
+  }
+
+  .Video.ratio16_9 {
+    min-width: calc(100vmin / 9 * 16);
+    min-height: 100vmin;
+  }
+}

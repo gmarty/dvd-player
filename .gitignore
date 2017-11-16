@@ -1,0 +1,27 @@
+# dependencies
+node_modules
+
+# testing
+coverage
+
+# production
+build
+
+# misc
+.DS_Store
+npm-debug.log
+
+TODO.md
+public/media/
+src/lib/vm2.js
+src/VideoSample.js
+_*.js
+
+# Don't commit tests for now.
+*.test.js
+src/setupTests.js
+
+# Don't use flow for now.
+.flowconfig
+flow-typed/
+src/flow/
