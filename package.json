@@ -9,7 +9,12 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17"
   },
+  "devDependencies": {
+    "gh-pages": "^1.0.0"
+  },
   "scripts": {
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom"
@@ -21,6 +26,7 @@
   "author": "Guillaume C. Marty <edo999@gmail.com>",
   "main": "src/index.js",
   "repository": "https://github.com/gmarty/dvd-player",
+  "homepage": "https://gmarty.github.io/dvd-player",
   "license": "GPL-3.0+",
   "private": false
 }
