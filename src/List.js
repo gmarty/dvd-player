@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import config from './config';
 import './List.css';
+import Loader from './components/Loader';
 
 class List extends Component {
   state = {
+    loading: true,
     list: [],
   };
 
@@ -16,13 +18,32 @@ class List extends Component {
       .then((list) => this.setState({ list }))
       .catch((err) => {
         console.error('Could not load the DVD list.', err);
+      })
+      .finally(() => {
+        this.setState({ loading: false });
       });
   }
 
   render() {
-    if (!this.state.list || !this.state.list.length) {
-      // @todo: Show an error message.
-      return null;
+    if (this.state.loading) {
+      return (
+        <div className="loader-container">
+          <Loader/>
+        </div>
+      );
+    }
+
+    if (!this.state.loading && !this.state.list.length) {
+      return (
+        <div>
+          <p>The DVD server could not be reached.</p>
+          <p>Have you tried the following?</p>
+          <ul>
+            <li>Make sure the DVD server is up and running.</li>
+            <li>Make sure you have a working internet connection.</li>
+          </ul>
+        </div>
+      );
     }
 
     const host = this.props.host || config.host;

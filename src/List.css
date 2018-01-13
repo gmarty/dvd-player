@@ -109,3 +109,10 @@ section.List ul li:focus a span,
 section.List ul li:hover a span {
   background-color: var(--primary-color);
 }
+
+.loader-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
