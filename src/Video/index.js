@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Menus from './Menus';
 import { formatTime } from '../utils';
 import './index.css';
+import Menus from './Menus';
 
 // For some reasons, encoded videos are 0.1% slower than they should be.
 const STRETCH_TIME = 1.001;

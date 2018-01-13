@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import config from './config';
+import Vm from './lib/vm';
+import './Play.css';
 import Video from './Video';
 import ChapterList from './ChapterList';
-import Vm from './lib/vm';
-import config from './config';
-import './Play.css';
 
 class Play extends Component {
   state = {
