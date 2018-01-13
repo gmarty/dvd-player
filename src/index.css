@@ -4,11 +4,14 @@
 
 html {
   font: normal 1em/1.2em Arial;
-  background: white;
+  background: var(--primary-color);
 }
 
 body {
+  min-height: 100vh;
+  position: relative;
+  margin: 0;
   overflow-x: hidden;
   overflow-y: scroll;
-  background: transparent;
+  background: white;
 }
