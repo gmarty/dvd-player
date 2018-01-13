@@ -1,12 +1,11 @@
-.Play {
+section.Play {
   display: flex;
   flex-direction: column;
-  height: 100vh;
 }
 
 @media (orientation: landscape) {
   /* The background get black on full screen mode. */
-  html {
+  body.Play {
     background: black !important;
   }
 }

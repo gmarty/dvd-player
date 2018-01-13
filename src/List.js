@@ -38,7 +38,9 @@ class List extends Component {
       ));
 
     return (
-      <ul className="List">{list}</ul>
+      <section className="List">
+        <ul>{list}</ul>
+      </section>
     );
   }
 }

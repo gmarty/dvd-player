@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Helmet } from 'react-helmet';
 import config from './config';
 import Vm from './lib/vm';
 import './Play.css';
@@ -53,13 +54,17 @@ class Play extends Component {
     const host = this.props.host || config.host;
 
     return (
-      <div className="Play">
+      <section className="Play">
+        <Helmet>
+          <body className="Play"/>
+        </Helmet>
+
         <Video host={host}
                metadata={this.state.metadata}
                ref={(t) => this.video = t}/>
 
         <ChapterList metadata={this.state.metadata}/>
-      </div>
+      </section>
     );
   }
 }

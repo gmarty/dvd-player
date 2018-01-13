@@ -9,10 +9,10 @@ import registerServiceWorker from './registerServiceWorker';
 
 render(
   <Router>
-    <section>
+    <div>
       <Route exact path="/" component={List}/>
       <Route path="/play/:dvd" component={Play}/>
-    </section>
+    </div>
   </Router>,
   document.body
 );
