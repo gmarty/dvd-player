@@ -102,10 +102,10 @@ Number of columns per breakpoints:
 
 .List li:focus,
 .List li:hover {
-  box-shadow: 0 0 1em orangered inset;
+  box-shadow: 0 0 1em var(--primary-color) inset;
 }
 
 .List li:focus a span,
 .List li:hover a span {
-  background-color: orangered;
+  background-color: var(--primary-color);
 }

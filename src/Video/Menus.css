@@ -21,6 +21,6 @@
 .Menus .menu input[type="button"] {
   position: absolute;
   background: rgba(255, 69, 0, 0.4);
-  border: .5vmin solid orangered;
+  border: .5vmin solid var(--primary-color);
   border-radius: 1vmin;
 }

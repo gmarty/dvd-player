@@ -1,3 +1,7 @@
+:root {
+  --primary-color: orangered;
+}
+
 html {
   font: normal 1em/1.2em Arial;
   background: white;
