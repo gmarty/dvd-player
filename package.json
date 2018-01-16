@@ -18,7 +18,8 @@
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom"
+    "test": "react-scripts test --env=jsdom",
+    "generate-icons": "inkscape -e public/icons/192.png -w 192 public/icons/icon.svg;inkscape -e public/icons/512.png -w 512 public/icons/icon.svg;"
   },
   "keywords": [
     "DVD",
