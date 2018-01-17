@@ -8,7 +8,7 @@ import Play from './Play';
 import registerServiceWorker from './registerServiceWorker';
 
 render(
-  <Router>
+  <Router basename={process.env.PUBLIC_URL}>
     <div>
       <Route exact path="/" component={List}/>
       <Route path="/play/:dvd" component={Play}/>
