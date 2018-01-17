@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import config from './config';
 import './List.css';
@@ -35,14 +35,14 @@ class List extends Component {
 
     if (!this.state.loading && !this.state.list.length) {
       return (
-        <div>
+        <Fragment>
           <p>The DVD server could not be reached.</p>
           <p>Have you tried the following?</p>
           <ul>
             <li>Make sure the DVD server is up and running.</li>
             <li>Make sure you have a working internet connection.</li>
           </ul>
-        </div>
+        </Fragment>
       );
     }
 

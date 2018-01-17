@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap-reboot.css';
@@ -9,10 +9,10 @@ import registerServiceWorker from './registerServiceWorker';
 
 render(
   <Router basename={process.env.PUBLIC_URL}>
-    <div>
+    <Fragment>
       <Route exact path="/" component={List}/>
       <Route path="/play/:dvd" component={Play}/>
-    </div>
+    </Fragment>
   </Router>,
   document.body
 );
