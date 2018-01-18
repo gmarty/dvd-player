@@ -218,8 +218,10 @@ class Vm {
 
     this.set = null; // Avoid infinite loops.
     let jump = false;
+    let instructionId = 0;
 
-    instructions.forEach(instruction => {
+    while (instructionId < instructions.length) {
+      const instruction = instructions[instructionId];
       let bodies = [];
 
       if (Object.keys(instruction.cond).length === 0) {
@@ -247,6 +249,11 @@ class Vm {
 
         switch (body.inst) {
           case 'NOP':
+            break;
+
+          case 'GoTo':
+            // We decrement by one to account for counter increment later.
+            instructionId = body.operand[0] - 1 - 1; // Make it 0-based.
             break;
 
           case 'set':
@@ -301,6 +308,13 @@ class Vm {
             jump = true;
             break;
 
+          case 'JumpSS_VMGM_MENU':
+            this.set = 'pgci_srp';
+            const menu = this.instructions[this.domain].menu_types[this.lang][body.operand[0]];
+            this.operands = [menu.pgc - 1]; // Make it 0-based.
+            jump = true;
+            break;
+
           case 'CallSS_VMGM_PGC':
             // @todo Implement me.
             jump = true;
@@ -318,11 +332,13 @@ class Vm {
             break;
 
           default:
-            console.error(`'Unknown instruction type: ${body.inst}`);
+            console.error(`Unknown instruction type: ${body.inst}`);
             throw new Error('Unknown instruction type');
         }
       });
-    });
+
+      instructionId++;
+    }
 
     return jump;
   }
