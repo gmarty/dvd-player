@@ -7,7 +7,21 @@ import Menus from './Menus';
 const STRETCH_TIME = 1.001;
 
 class Video extends Component {
-  state = {};
+  state = {
+    hasChapters: false, // True when more than 1 video or has text tracks.
+    hasMenus: false,
+
+    videoId: 0,
+    menuId: null, // menu-ja-0-1
+
+    // UI
+    isPlaying: false,
+    muted: false,
+    timeLineMax: 0,
+    currentTime: 0,
+    //timeRemaining: 0,
+    volumeSliderValue: 1,
+  };
 
   playlist = [];
   chapters = [];
@@ -18,64 +32,6 @@ class Video extends Component {
   // UI
   preTimelinePausedStatus = true;
   timelineMoving = false;
-
-  constructor(props) {
-    super(props);
-
-    // @todo host and metadata don't need to be part of the state.
-    const host = props.host || '';
-    const metadata = props.metadata;
-    this.state = {
-      host,
-      metadata,
-
-      menus: [],
-
-      hasChapters: false, // True when more than 1 video or has text tracks.
-
-      videoIndex: 0,
-      menuId: null, // menu-ja-0-1
-
-      // UI
-      isPlaying: false,
-      muted: false,
-      timeLineMax: 0,
-      currentTime: 0,
-      //timeRemaining: 0,
-      volumeSliderValue: 1,
-    };
-  }
-
-  componentWillReceiveProps(props) {
-    const host = props.host || '';
-    const metadata = props.metadata;
-    this.setState({
-      host,
-      metadata,
-
-      menus: [],
-
-      hasChapters: false, // True when more than 1 video or has text tracks.
-
-      videoIndex: 0,
-      menuId: null, // menu-ja-0-1
-
-      // UI
-      isPlaying: false,
-      muted: false,
-      timeLineMax: 0,
-      currentTime: 0,
-      //timeRemaining: 0,
-      volumeSliderValue: 1,
-    });
-
-    this.playlist = [];
-    this.chapters = [];
-
-    // UI
-    this.preTimelinePausedStatus = true;
-    this.timelineMoving = false;
-  }
 
   // Public properties / methods.
   set onmenu(handler) {
@@ -147,21 +103,21 @@ class Video extends Component {
   /**
    * Play the video specified by its order in the playlist.
    *
-   * @param {number} videoIndex
+   * @param {number} videoId
    */
-  playVideoByIndex(videoIndex) {
-    if (typeof videoIndex !== 'number') {
+  playVideoByIndex(videoId) {
+    if (typeof videoId !== 'number') {
       console.error('Invalid video number. An integer is expected.');
       return;
     }
-    if (videoIndex < 0 || videoIndex >= this._playlist.length) {
-      console.error(`Video requested out of bound (0, ${this._playlist.length - 1}).`);
+    if (videoId < 0 || videoId >= this.playlist.length) {
+      console.error(`Video requested out of bound (0, ${this.playlist.length - 1}).`);
       return;
     }
 
-    this._changeCurrentVideo(this.currentVideo, this._playlist[videoIndex]);
+    this._changeCurrentVideo(this.currentVideo, this.playlist[videoId]);
     this._hideAllMenu();
-    this._videoIndex = videoIndex;
+    this._videoId = videoId;
     this.play();
   }
 
@@ -179,17 +135,17 @@ class Video extends Component {
       id = String(id);
     }
 
-    const videoIndex = this.playlist.findIndex((el) => {
+    const videoId = this.playlist.findIndex((el) => {
       return el.id === id;
     });
 
-    if (videoIndex === -1) {
+    if (videoId === -1) {
       console.error(`Video with ID '${id}' couldn't be found.`);
       return;
     }
 
     this.setState({ menuId: null }); // Hide the menu.
-    this.setState({ videoIndex });
+    this.setState({ videoId });
     this.play();
   }
 
@@ -211,7 +167,7 @@ class Video extends Component {
       console.error('Invalid chapter number.');
       return;
     }
-    if (!this.chapters.length || !this.chapters[this.state.videoIndex] || !this.currentChapters.length) {
+    if (!this.chapters.length || !this.chapters[this.state.videoId] || !this.currentChapters.length) {
       console.error('The video has no chapters.');
       return;
     }
@@ -249,12 +205,12 @@ class Video extends Component {
 
   // Private properties / methods.
   get currentVideo() {
-    const currentVideo = this.playlist[this.state.videoIndex];
+    const currentVideo = this.playlist[this.state.videoId];
     return currentVideo ? currentVideo : null;
   }
 
   get currentChapters() {
-    const currentChapters = this.chapters[this.state.videoIndex];
+    const currentChapters = this.chapters[this.state.videoId];
     return currentChapters ? currentChapters : null;
   }
 
@@ -274,10 +230,10 @@ class Video extends Component {
         <video key={`video-${id - 1}`}
                id={`video-${id - 1}`}
                data-index={(id - 1)}
-               src={videos.video.length ? `${this.state.host}${videos.video[0]}` : null}
+               src={videos.video.length ? `${this.props.host}${videos.video[0]}` : null}
                crossOrigin="anonymous"
                playsInline={true}
-               hidden={(id - 1) === this.state.videoIndex ? null : true}
+               hidden={(id - 1) === this.state.videoId ? null : true}
 
                onCanPlay={this.videoCanPlay}
                onPlay={this.videoPlay}
@@ -318,7 +274,7 @@ class Video extends Component {
     return tracks.map((track, index) =>
       <track key={index}
              kind="chapters"
-             src={`${this.state.host}${track}`}
+             src={`${this.props.host}${track}`}
              srcLang="en"
              default={(index === 0)}/>
     );
@@ -400,10 +356,10 @@ class Video extends Component {
     }
 
     // At the end of the video, play the next in the playlist, if any.
-    let videoIndex = this.state.videoIndex;
-    if (videoIndex < this.playlist.length - 1) {
-      videoIndex++;
-      this.setState({ videoIndex });
+    let videoId = this.state.videoId;
+    if (videoId < this.playlist.length - 1) {
+      videoId++;
+      this.setState({ videoId });
       // We delay the playback until after the current is updated.
       setTimeout(() => {
         this.currentVideo.currentTime = 0;
@@ -446,10 +402,10 @@ class Video extends Component {
       }
     }
 
-    let videoIndex = this.state.videoIndex;
-    if (this.playlist.length > 1 && videoIndex > 0) {
-      videoIndex--;
-      this.setState({ videoIndex });
+    let videoId = this.state.videoId;
+    if (this.playlist.length > 1 && videoId > 0) {
+      videoId--;
+      this.setState({ videoId });
       this.pause();
       setTimeout(() => {
         this.currentVideo.currentTime = 0;
@@ -474,10 +430,10 @@ class Video extends Component {
     }
 
     // Play next video in the list.
-    let videoIndex = this.state.videoIndex;
-    if (videoIndex < this.playlist.length - 1) {
-      videoIndex++;
-      this.setState({ videoIndex });
+    let videoId = this.state.videoId;
+    if (videoId < this.playlist.length - 1) {
+      videoId++;
+      this.setState({ videoId });
       this.pause();
       setTimeout(() => {
         this.currentVideo.currentTime = 0;
@@ -530,8 +486,6 @@ class Video extends Component {
 
     if (this.externalMenuHandler) {
       this.externalMenuHandler.call();
-      /*} else if (this.menus[0]) {
-        this.menus[0].show();*/
     }
   };
 
@@ -572,7 +526,7 @@ class Video extends Component {
   }
 
   render() {
-    const videoNodes = this.videoTags(this.state.metadata);
+    const videoNodes = this.videoTags(this.props.metadata);
 
     const playButtonClassName = this.state.isPlaying ?
       'media-controls-play-button paused' :
@@ -587,8 +541,8 @@ class Video extends Component {
 
     return (
       <div className="Video">
-        <Menus host={this.state.host}
-               metadata={this.state.metadata}
+        <Menus host={this.props.host}
+               metadata={this.props.metadata}
                selectedMenuId={this.state.menuId}
                onClick={this.menuClickHandler}/>
         <div className="videos">

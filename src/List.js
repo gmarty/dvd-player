@@ -60,7 +60,9 @@ class List extends Component {
 
     return (
       <section className="List">
-        <ul>{list}</ul>
+        <ul>
+          {list}
+        </ul>
       </section>
     );
   }

@@ -3,23 +3,6 @@ import { formatTime, padWithZero } from './utils';
 import './ChapterList.css';
 
 class ChapterList extends Component {
-  state = {
-    metadata: [],
-  };
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      metadata: props.metadata,
-    };
-  }
-
-  componentWillReceiveProps(props) {
-    const metadata = props.metadata;
-    this.setState({ metadata });
-  }
-
   chaptersList(metadata = []) {
     const nodes = [];
 
@@ -64,18 +47,20 @@ class ChapterList extends Component {
   }
 
   render() {
-    if (!this.state.metadata) {
+    if (!this.props.metadata) {
       return null;
     }
 
-    const titleNodes = this.chaptersList(this.state.metadata);
+    const titleNodes = this.chaptersList(this.props.metadata);
 
     if (!titleNodes) {
       return null;
     }
 
     return (
-      <div className="ChapterList">{titleNodes}</div>
+      <div className="ChapterList">
+        {titleNodes}
+      </div>
     );
   }
 }

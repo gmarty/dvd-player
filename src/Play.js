@@ -10,22 +10,16 @@ class Play extends Component {
   state = {
     metadata: [],
   };
-  dvd = '';
   video = null;
   vm = null;
 
-  constructor(props) {
-    super(props);
-
-    this.dvd = props && props.match && props.match.params
-      && props.match.params.dvd;
-  }
-
   componentDidMount() {
     const host = this.props.host || config.host;
+    const dvd = this.props && this.props.match && this.props.match.params
+      && this.props.match.params.dvd;
     const promises = [
-      `${host}/${this.dvd}/metadata.json`,
-      `${host}/${this.dvd}/vm.json`,
+      `${host}/${dvd}/metadata.json`,
+      `${host}/${dvd}/vm.json`,
     ]
       .map((url) => fetch(url)
         .then((body) => body.json())
@@ -43,7 +37,7 @@ class Play extends Component {
           }
 
           this.vm.start();
-        }, 500);
+        }, 1000);
       })
       .catch((err) => {
         //console.error('Could not load the DVD data.', err);
