@@ -135,9 +135,8 @@ class Video extends Component {
       id = String(id);
     }
 
-    const videoId = this.playlist.findIndex((el) => {
-      return el.id === id;
-    });
+    const videoId = this.playlist
+      .findIndex((el) => el && el.id === id);
 
     if (videoId === -1) {
       console.error(`Video with ID '${id}' couldn't be found.`);
