@@ -156,6 +156,7 @@ class Vm {
           break;
         }
 
+        // This is unfortunate that video ID don't match operands ID.
         this.dvd.playVideoByID(`video-${this.domain - 1}`);
         console.log(`this.dvd.playVideoByID('video-${this.domain - 1}');`);
 
@@ -287,10 +288,10 @@ class Vm {
           }
 
           case 'JumpTT':
-            const vtt = this.vtt[body.operand[0]];
-            this.domain = vtt.domain;
+            const vtt = this.vtt[body.operand[0] - 1]; // Make it 0-based.
             this.set = 'pgciut';
-            this.operands = [vtt.pgc];
+            this.domain = vtt.domain;
+            this.operands = [vtt.pgc]; // Already 0-based.
             jump = true;
             break;
 
