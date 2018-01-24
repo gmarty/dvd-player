@@ -29,6 +29,11 @@ const HL_BTNN_REG = 8;
 // Parental Level
 const PTL_REG = 13;
 
+// DVD Menu ID
+const DVD_MENU_Escape = 0;
+const DVD_MENU_Title = 2;
+const DVD_MENU_Root = 3;
+
 class Vm {
   instructions = null;
   vtt = [];
@@ -69,16 +74,17 @@ class Vm {
     this.hasMenus = this.instructions && this.instructions[0] &&
       this.instructions[0].menu_types &&
       this.instructions[0].menu_types[this.lang] &&
-      this.instructions[0].menu_types[this.lang][2 /* Title */];
+      this.instructions[0].menu_types[this.lang][DVD_MENU_Title];
     this.dvd.hasMenus(this.hasMenus);
 
     // Override the menu button logic.
     this.dvd.onmenu = () => {
       let menu = null;
-      if (this.instructions[this.domain].menu_types[this.lang][3 /* Root */]) {
-        menu = this.instructions[this.domain].menu_types[this.lang][3 /* Root */];
-      } else if (this.instructions[0].menu_types[this.lang][2 /* Title */]) {
-        menu = this.instructions[0].menu_types[this.lang][2 /* Title */];
+      if (this.instructions[this.domain].menu_types[this.lang][DVD_MENU_Root]) {
+        menu = this.instructions[this.domain].menu_types[this.lang][DVD_MENU_Root];
+      } else if (this.instructions[0].menu_types[this.lang][DVD_MENU_Title]) {
+        this.domain = 0;
+        menu = this.instructions[0].menu_types[this.lang][DVD_MENU_Title];
       }
 
       if (menu) {
