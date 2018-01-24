@@ -27,17 +27,13 @@ class Play extends Component {
 
     Promise.all(promises)
       .then(([metadata, vm]) => {
-        this.setState({ metadata });
         this.vm = new Vm(vm, this.video);
 
-        // @fixme: How to make it more elegant?
-        setTimeout(() => {
-          if (!this.vm) {
-            return;
-          }
-
-          this.vm.start();
-        }, 1000);
+        this.setState({ metadata }, () => {
+          setTimeout(() => {
+            this.vm.start();
+          }, 1000);
+        });
       })
       .catch((err) => {
         //console.error('Could not load the DVD data.', err);
